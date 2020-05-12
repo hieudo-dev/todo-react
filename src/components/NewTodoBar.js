@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField';
 
 const useStyle = makeStyles((theme) => ({
    root: {
-      borderRadius: 10
+      minWidth: 300,
    },
    input: {
       marginTop: 20, 
@@ -18,8 +18,8 @@ export default props => {
    const classes = useStyle();
 
    return (
-      <Grid className={classes.root} container justify='center' style={{marginTop: 25}}>
-         <Grid item xs={6}>
+      <Grid container justify='center' style={{marginTop: 25}}>
+         <Grid item xs={6} className={classes.root}>
          <TextField 
             className={classes.input}
             placeholder="Take a note..."

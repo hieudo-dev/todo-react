@@ -6,10 +6,10 @@ import TodoCard from './TodoCard';
 const useStyles = makeStyles((theme) => ({
    root: {
       flexGrow: 1,
-      margin: 0
+      padding: '1% 5%'
    },
    category:{
-      padding: 15
+      padding: 6
    },
    categoryHeader:{
       margin: 4,
@@ -39,39 +39,37 @@ export default () => {
    }
 
    return (
-      <div className={classes.root}>
-         <Grid container alignItems='flex-start'>
-            <Grid className={classes.category} container xs={6} sm={4} direction='column' justify='flex-start' spacing={1} >
-               <Grid item>
-                  <h3 className={classes.categoryHeader}>Completed</h3>
-               </Grid>
-               {mockTodos.completed.map(todo => (
-                  <TodoCard>
-                     {todo}
-                  </TodoCard>
-               ))}                  
+      <Grid className={classes.root} container alignItems='flex-start'>
+         <Grid className={classes.category} container xs={6} sm={4} direction='column' justify='flex-start'>
+            <Grid item>
+               <h3 className={classes.categoryHeader}>Completed</h3>
             </Grid>
-            <Grid className={classes.category} container xs={6} sm={4} direction='column' justify='flex-start' spacing={1}>
-               <Grid item>
-                  <h3 className={classes.categoryHeader}>Important</h3>
-               </Grid>               
-               {mockTodos.important.map(todo => (
-                  <TodoCard>
-                     {todo}
-                  </TodoCard>
-               ))}     
-            </Grid>
-            <Grid className={classes.category} container xs={6} sm={4} direction='column' justify='flex-start' spacing={1} >
-               <Grid item>
-                  <h3 className={classes.categoryHeader}>Common</h3>
-               </Grid>            
-               {mockTodos.common.map(todo => (
-                  <TodoCard>
-                     {todo}
-                  </TodoCard>
-               ))}     
-            </Grid>
+            {mockTodos.completed.map(todo => (
+               <TodoCard>
+                  {todo}
+               </TodoCard>
+            ))}                  
          </Grid>
-      </div>
+         <Grid className={classes.category} container xs={6} sm={4} direction='column' justify='flex-start'>
+            <Grid item>
+               <h3 className={classes.categoryHeader}>Important</h3>
+            </Grid>               
+            {mockTodos.important.map(todo => (
+               <TodoCard>
+                  {todo}
+               </TodoCard>
+            ))}     
+         </Grid>
+         <Grid className={classes.category} container xs={6} sm={4} direction='column' justify='flex-start'>
+            <Grid item>
+               <h3 className={classes.categoryHeader}>Common</h3>
+            </Grid>            
+            {mockTodos.common.map(todo => (
+               <TodoCard>
+                  {todo}
+               </TodoCard>
+            ))}     
+         </Grid>
+      </Grid>
    );
 }
