@@ -19,6 +19,24 @@ const useStyles = makeStyles((theme) => ({
 
 export default () => {
    const classes = useStyles();
+   const mockTodos = {
+      completed: [
+         "Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. At per augue perfecto, quo persecuti posidonium in. His id vero labore, epicurei insolens in qui. Ad purto verear expetendis vim, ad posse clita sadipscing vel. Id est nulla eripuit dignissim, elit tibique definitionem nam ex.",
+         "Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. At per augue perfecto, quo persecuti posidonium in. ",
+         "Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. "
+      ],
+      important: [
+         "Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. ",
+         "Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. ",
+         "Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. ",
+         "Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. "
+      ],
+      common: [
+         "Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. ",
+         "Lorem ipsum dolor sit amet per sonet everti ne. ",
+         "Lorem ipsum dolor sit amet. "
+      ]
+   }
 
    return (
       <div className={classes.root}>
@@ -27,46 +45,31 @@ export default () => {
                <Grid item>
                   <h3 className={classes.categoryHeader}>Completed</h3>
                </Grid>
-               <TodoCard>
-                  Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. At per augue perfecto, quo persecuti posidonium in. His id vero labore, epicurei insolens in qui. Ad purto verear expetendis vim, ad posse clita sadipscing vel. Id est nulla eripuit dignissim, elit tibique definitionem nam ex.
-               </TodoCard>
-               <TodoCard>
-                  Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. 
-               </TodoCard>
-               <TodoCard>
-                  Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. At per augue perfecto, quo persecuti posidonium in. 
-               </TodoCard>
+               {mockTodos.completed.map(todo => (
+                  <TodoCard>
+                     {todo}
+                  </TodoCard>
+               ))}                  
             </Grid>
             <Grid className={classes.category} container xs={6} sm={4} direction='column' justify='flex-start' spacing={1}>
                <Grid item>
                   <h3 className={classes.categoryHeader}>Important</h3>
-               </Grid>
-               <TodoCard>
-                  Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. 
-               </TodoCard>
-               <TodoCard>
-                  Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. 
-               </TodoCard>
-               <TodoCard>
-                  Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. 
-               </TodoCard>
-               <TodoCard>
-                  Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. 
-               </TodoCard>
+               </Grid>               
+               {mockTodos.important.map(todo => (
+                  <TodoCard>
+                     {todo}
+                  </TodoCard>
+               ))}     
             </Grid>
             <Grid className={classes.category} container xs={6} sm={4} direction='column' justify='flex-start' spacing={1} >
-            <Grid item>
+               <Grid item>
                   <h3 className={classes.categoryHeader}>Common</h3>
-               </Grid>
-               <TodoCard>
-                  Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. 
-               </TodoCard>
-               <TodoCard>
-                  Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. 
-               </TodoCard>
-               <TodoCard>
-                  Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. 
-               </TodoCard>
+               </Grid>            
+               {mockTodos.common.map(todo => (
+                  <TodoCard>
+                     {todo}
+                  </TodoCard>
+               ))}     
             </Grid>
          </Grid>
       </div>

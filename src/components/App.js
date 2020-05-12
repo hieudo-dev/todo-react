@@ -6,7 +6,6 @@ import green from '@material-ui/core/colors/green';
 import grey from '@material-ui/core/colors/grey';
 import NewTodoBar from './NewTodoBar';
 import TodoGrid from './TodoGrid';
-import { Grid } from '@material-ui/core';
 
 const theme = createMuiTheme({
    palette: {
