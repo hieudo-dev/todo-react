@@ -6,6 +6,7 @@ import green from '@material-ui/core/colors/green';
 import grey from '@material-ui/core/colors/grey';
 import NewTodoBar from './NewTodoBar';
 import TodoGrid from './TodoGrid';
+import { Grid } from '@material-ui/core';
 
 
 export default props => {
@@ -14,7 +15,7 @@ export default props => {
          primary: blue,
          secondary: green,
          background: {
-         default: grey[900]
+         default: grey[100]
          }
       },
    });
@@ -22,8 +23,12 @@ export default props => {
    return (
       <ThemeProvider theme={theme}>
          <CssBaseline/>
-         <NewTodoBar/>
-         <TodoGrid/>
+         <div>
+            <NewTodoBar/>
+            <br/>
+            <br/>
+            <TodoGrid/>
+         </div>
       </ThemeProvider>
    );
 }
