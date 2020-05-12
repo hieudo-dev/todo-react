@@ -8,18 +8,17 @@ import NewTodoBar from './NewTodoBar';
 import TodoGrid from './TodoGrid';
 import { Grid } from '@material-ui/core';
 
+const theme = createMuiTheme({
+   palette: {
+      primary: blue,
+      secondary: green,
+      background: {
+      default: grey[100]
+      }
+   },
+});
 
 export default props => {
-   const theme = createMuiTheme({
-      palette: {
-         primary: blue,
-         secondary: green,
-         background: {
-         default: grey[100]
-         }
-      },
-   });
-
    return (
       <ThemeProvider theme={theme}>
          <CssBaseline/>

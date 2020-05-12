@@ -5,8 +5,8 @@ import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
    root: {
-      padding: theme.spacing(2),
-      textAlign: 'center',
+      padding: theme.spacing(1),
+      textAlign: 'left',
       color: theme.palette.text.secondary,
    },
 }));
@@ -16,8 +16,8 @@ export default props => {
 
    return (
       <Grid item>
-         <Paper className={classes.paper}>
-            props.children
+         <Paper className={classes.root}>
+            {props.children}
          </Paper>
       </Grid>
    );
