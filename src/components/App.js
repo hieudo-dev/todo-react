@@ -21,12 +21,10 @@ export default props => {
    return (
       <ThemeProvider theme={theme}>
          <CssBaseline/>
-         <div>
-            <NewTodoBar/>
-            <br/>
-            <br/>
-            <TodoGrid/>
-         </div>
+         <NewTodoBar/>
+         <br/>
+         <br/>
+         <TodoGrid/>
       </ThemeProvider>
    );
 }
