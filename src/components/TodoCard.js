@@ -2,8 +2,10 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import DeleteIcon from '@material-ui/icons/Delete';
+import CheckIcon from '@material-ui/icons/Check';
 import EditIcon from '@material-ui/icons/Edit';
 import { ExpansionPanel, ExpansionPanelSummary, Typography, ExpansionPanelDetails, createMuiTheme, ThemeProvider } from '@material-ui/core';
+import { red } from '@material-ui/core/colors';
 
 const theme = createMuiTheme({
    overrides: {
@@ -24,9 +26,12 @@ const useStyles = makeStyles((theme) => ({
    contentText: {
       color: theme.palette.text.primary.main
    },
-   contentButtons: {
+   checkIcon: {
       color: theme.palette.primary.main,
-      padding: 10
+      marginLeft: 5
+   },
+   editIcons: {
+      color: theme.palette.text.primary.main,
    }
 }));
 
@@ -47,14 +52,13 @@ export default props => {
                      {props.children}
                   </Typography>
                </ExpansionPanelSummary>
-               <ExpansionPanelDetails classes={{root: classes.contentButtons}}>
-                  <Grid container justify='flex-end' spacing={1}>
-                     <Grid item>
-                        <EditIcon/>
-                     </Grid>
-                     <Grid item>
-                        <DeleteIcon/>
-                     </Grid>
+               <ExpansionPanelDetails>
+                  <Grid container alignItems='center' justify='flex-start' xs={6}>
+                     <CheckIcon className={classes.checkIcon}/>
+                  </Grid>
+                  <Grid container className={classes.editIcons} alignItems='center' justify='flex-end' xs={6} spacing={1}>
+                     <EditIcon style={{marginRight: 10}}/>
+                     <DeleteIcon style={{color: red[500]}}/>
                   </Grid>
                </ExpansionPanelDetails>
             </ExpansionPanel>
