@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { delTodo, editTodo } from "../store/actions";
 import { makeStyles } from "@material-ui/core/styles";
@@ -28,8 +28,14 @@ const useStyles = makeStyles(theme => ({
    }
 }));
 
-const TodoGrid = ({ todos }) => {
+const TodoGrid = ({ todos, delTodo, editTodo }) => {
    const classes = useStyles();
+   const [state, setState] = useState({ deleting: -1, editing: -1 });
+
+   const handleDelete = id => {
+      setState({ ...state, deleting: id });
+      setTimeout(() => delTodo(id), 300);
+   };
 
    return (
       <Grid className={classes.root} container alignItems="flex-start">
@@ -49,9 +55,17 @@ const TodoGrid = ({ todos }) => {
                   Done
                </h3>
             </Typography>
-            {todos.done.map(todo => (
+            {todos.done.map(([id, data]) => (
                <Grid className={classes.card} item>
-                  <TodoCard>{todo}</TodoCard>
+                  <TodoCard
+                     key={id}
+                     id={id}
+                     active={id !== state.deleting}
+                     onEdit={() => null}
+                     onDelete={() => handleDelete(id)}
+                  >
+                     {data}
+                  </TodoCard>
                </Grid>
             ))}
          </Grid>
@@ -71,9 +85,17 @@ const TodoGrid = ({ todos }) => {
                   Important
                </h3>
             </Typography>
-            {todos.important.map(todo => (
+            {todos.important.map(([id, data]) => (
                <Grid className={classes.card} item>
-                  <TodoCard>{todo}</TodoCard>
+                  <TodoCard
+                     key={id}
+                     id={id}
+                     active={id !== state.deleting}
+                     onEdit={() => null}
+                     onDelete={() => handleDelete(id)}
+                  >
+                     {data}
+                  </TodoCard>
                </Grid>
             ))}
          </Grid>
@@ -93,9 +115,17 @@ const TodoGrid = ({ todos }) => {
                   To do
                </h3>
             </Typography>
-            {todos.common.map(todo => (
+            {todos.common.map(([id, data]) => (
                <Grid className={classes.card} item>
-                  <TodoCard>{todo}</TodoCard>
+                  <TodoCard
+                     key={id}
+                     id={id}
+                     active={id !== state.deleting}
+                     onEdit={() => null}
+                     onDelete={() => handleDelete(id)}
+                  >
+                     {data}
+                  </TodoCard>
                </Grid>
             ))}
          </Grid>

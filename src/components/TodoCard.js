@@ -10,7 +10,8 @@ import {
    Typography,
    ExpansionPanelDetails,
    createMuiTheme,
-   ThemeProvider
+   ThemeProvider,
+   Fade
 } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
 
@@ -47,29 +48,39 @@ const TodoCard = props => {
 
    return (
       <ThemeProvider theme={theme}>
-         <ExpansionPanel>
-            <ExpansionPanelSummary>
-               <Typography className={classes.contentText}>
-                  {props.children}
-               </Typography>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-               <Grid container alignItems="center" justify="flex-start" xs={6}>
-                  <CheckIcon className={classes.checkIcon} />
-               </Grid>
-               <Grid
-                  container
-                  className={classes.editIcons}
-                  alignItems="center"
-                  justify="flex-end"
-                  xs={6}
-                  spacing={1}
-               >
-                  <EditIcon style={{ marginRight: 10 }} />
-                  <DeleteIcon style={{ color: red[500] }} />
-               </Grid>
-            </ExpansionPanelDetails>
-         </ExpansionPanel>
+         <Fade in={props.active} timeout={{ appear: 0, enter: 0, exit: 300 }}>
+            <ExpansionPanel>
+               <ExpansionPanelSummary>
+                  <Typography className={classes.contentText}>
+                     {props.children}
+                  </Typography>
+               </ExpansionPanelSummary>
+               <ExpansionPanelDetails>
+                  <Grid
+                     container
+                     alignItems="center"
+                     justify="flex-start"
+                     xs={6}
+                  >
+                     <CheckIcon className={classes.checkIcon} />
+                  </Grid>
+                  <Grid
+                     container
+                     className={classes.editIcons}
+                     alignItems="center"
+                     justify="flex-end"
+                     xs={6}
+                     spacing={1}
+                  >
+                     {/* <EditIcon style={{ marginRight: 10 }} /> */}
+                     <DeleteIcon
+                        onClick={props.onDelete}
+                        style={{ color: red[500] }}
+                     />
+                  </Grid>
+               </ExpansionPanelDetails>
+            </ExpansionPanel>
+         </Fade>
       </ThemeProvider>
    );
 };
