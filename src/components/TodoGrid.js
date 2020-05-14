@@ -10,6 +10,9 @@ const useStyles = makeStyles(theme => ({
       flexGrow: 1,
       padding: "1% 5%"
    },
+   card: {
+      margin: 4
+   },
    category: {
       padding: 6
    },
@@ -54,18 +57,18 @@ export default () => {
             direction="column"
             justify="flex-start"
          >
-            <Grid item>
-               <Typography>
-                  <h3
-                     className={classes.categoryHeader}
-                     style={{ backgroundColor: green[700] }}
-                  >
-                     Done
-                  </h3>
-               </Typography>
-            </Grid>
+            <Typography>
+               <h3
+                  className={classes.categoryHeader}
+                  style={{ backgroundColor: green[700] }}
+               >
+                  Done
+               </h3>
+            </Typography>
             {mockTodos.done.map(todo => (
-               <TodoCard>{todo}</TodoCard>
+               <Grid className={classes.card} item>
+                  <TodoCard>{todo}</TodoCard>
+               </Grid>
             ))}
          </Grid>
          <Grid
@@ -76,18 +79,18 @@ export default () => {
             direction="column"
             justify="flex-start"
          >
-            <Grid item>
-               <Typography>
-                  <h3
-                     className={classes.categoryHeader}
-                     style={{ backgroundColor: red[700] }}
-                  >
-                     Important
-                  </h3>
-               </Typography>
-            </Grid>
+            <Typography>
+               <h3
+                  className={classes.categoryHeader}
+                  style={{ backgroundColor: red[700] }}
+               >
+                  Important
+               </h3>
+            </Typography>
             {mockTodos.important.map(todo => (
-               <TodoCard>{todo}</TodoCard>
+               <Grid className={classes.card} item>
+                  <TodoCard>{todo}</TodoCard>
+               </Grid>
             ))}
          </Grid>
          <Grid
@@ -98,18 +101,18 @@ export default () => {
             direction="column"
             justify="flex-start"
          >
-            <Grid item>
-               <Typography>
-                  <h3
-                     className={classes.categoryHeader}
-                     style={{ backgroundColor: blue[700] }}
-                  >
-                     To do
-                  </h3>
-               </Typography>
-            </Grid>
+            <Typography>
+               <h3
+                  className={classes.categoryHeader}
+                  style={{ backgroundColor: blue[700] }}
+               >
+                  To do
+               </h3>
+            </Typography>
             {mockTodos.common.map(todo => (
-               <TodoCard>{todo}</TodoCard>
+               <Grid className={classes.card} item>
+                  <TodoCard>{todo}</TodoCard>
+               </Grid>
             ))}
          </Grid>
       </Grid>

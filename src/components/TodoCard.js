@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
       padding: theme.spacing(0.5)
    },
    contentText: {
-      color: theme.palette.text.primary.main
+      color: theme.palette.text.primary
    },
    checkIcon: {
       color: theme.palette.primary.main,
@@ -42,44 +42,36 @@ const useStyles = makeStyles(theme => ({
    }
 }));
 
-export default props => {
+const TodoCard = props => {
    const classes = useStyles();
-   const [, setChecked] = React.useState(true);
-
-   const handleChange = () => {
-      setChecked(prev => !prev);
-   };
 
    return (
       <ThemeProvider theme={theme}>
-         <Grid className={classes.root} item onClick={handleChange}>
-            <ExpansionPanel>
-               <ExpansionPanelSummary>
-                  <Typography>{props.children}</Typography>
-               </ExpansionPanelSummary>
-               <ExpansionPanelDetails>
-                  <Grid
-                     container
-                     alignItems="center"
-                     justify="flex-start"
-                     xs={6}
-                  >
-                     <CheckIcon className={classes.checkIcon} />
-                  </Grid>
-                  <Grid
-                     container
-                     className={classes.editIcons}
-                     alignItems="center"
-                     justify="flex-end"
-                     xs={6}
-                     spacing={1}
-                  >
-                     <EditIcon style={{ marginRight: 10 }} />
-                     <DeleteIcon style={{ color: red[500] }} />
-                  </Grid>
-               </ExpansionPanelDetails>
-            </ExpansionPanel>
-         </Grid>
+         <ExpansionPanel>
+            <ExpansionPanelSummary>
+               <Typography className={classes.contentText}>
+                  {props.children}
+               </Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+               <Grid container alignItems="center" justify="flex-start" xs={6}>
+                  <CheckIcon className={classes.checkIcon} />
+               </Grid>
+               <Grid
+                  container
+                  className={classes.editIcons}
+                  alignItems="center"
+                  justify="flex-end"
+                  xs={6}
+                  spacing={1}
+               >
+                  <EditIcon style={{ marginRight: 10 }} />
+                  <DeleteIcon style={{ color: red[500] }} />
+               </Grid>
+            </ExpansionPanelDetails>
+         </ExpansionPanel>
       </ThemeProvider>
    );
 };
+
+export default TodoCard;
