@@ -1,22 +1,22 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import TodoCard from './TodoCard';
-import { green, red, blue } from '@material-ui/core/colors';
-import { Typography } from '@material-ui/core';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import TodoCard from "./TodoCard";
+import { green, red, blue } from "@material-ui/core/colors";
+import { Typography } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
    root: {
       flexGrow: 1,
-      padding: '1% 5%'
+      padding: "1% 5%"
    },
-   category:{
-      padding: 6,
+   category: {
+      padding: 6
    },
-   categoryHeader:{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
+   categoryHeader: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
       margin: 4,
       color: "white",
       minHeight: 40
@@ -42,46 +42,76 @@ export default () => {
          "Lorem ipsum dolor sit amet per sonet everti ne. ",
          "Lorem ipsum dolor sit amet. "
       ]
-   }
+   };
 
    return (
-      <Grid className={classes.root} container alignItems='flex-start'>
-         <Grid className={classes.category} container xs={6} sm={4} direction='column' justify='flex-start'>
+      <Grid className={classes.root} container alignItems="flex-start">
+         <Grid
+            className={classes.category}
+            container
+            xs={12}
+            sm={4}
+            direction="column"
+            justify="flex-start"
+         >
             <Grid item>
                <Typography>
-                  <h3 className={classes.categoryHeader} style={{backgroundColor: green[700]}}>Done</h3>
+                  <h3
+                     className={classes.categoryHeader}
+                     style={{ backgroundColor: green[700] }}
+                  >
+                     Done
+                  </h3>
                </Typography>
             </Grid>
             {mockTodos.done.map(todo => (
-               <TodoCard>
-                  {todo}
-               </TodoCard>
-            ))}                  
+               <TodoCard>{todo}</TodoCard>
+            ))}
          </Grid>
-         <Grid className={classes.category} container xs={6} sm={4} direction='column' justify='flex-start'>
+         <Grid
+            className={classes.category}
+            container
+            xs={12}
+            sm={4}
+            direction="column"
+            justify="flex-start"
+         >
             <Grid item>
                <Typography>
-                  <h3 className={classes.categoryHeader} style={{backgroundColor: red[700]}}>Important</h3>
+                  <h3
+                     className={classes.categoryHeader}
+                     style={{ backgroundColor: red[700] }}
+                  >
+                     Important
+                  </h3>
                </Typography>
-            </Grid>               
+            </Grid>
             {mockTodos.important.map(todo => (
-               <TodoCard>
-                  {todo}
-               </TodoCard>
-            ))}     
+               <TodoCard>{todo}</TodoCard>
+            ))}
          </Grid>
-         <Grid className={classes.category} container xs={6} sm={4} direction='column' justify='flex-start'>
+         <Grid
+            className={classes.category}
+            container
+            xs={12}
+            sm={4}
+            direction="column"
+            justify="flex-start"
+         >
             <Grid item>
                <Typography>
-                  <h3 className={classes.categoryHeader} style={{backgroundColor: blue[700]}}>To do</h3>
+                  <h3
+                     className={classes.categoryHeader}
+                     style={{ backgroundColor: blue[700] }}
+                  >
+                     To do
+                  </h3>
                </Typography>
-            </Grid>            
+            </Grid>
             {mockTodos.common.map(todo => (
-               <TodoCard>
-                  {todo}
-               </TodoCard>
-            ))}     
+               <TodoCard>{todo}</TodoCard>
+            ))}
          </Grid>
       </Grid>
    );
-}
+};
