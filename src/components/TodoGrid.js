@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import { delTodo, editTodo } from "../store/actions";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import TodoCard from "./TodoCard";
@@ -26,26 +28,8 @@ const useStyles = makeStyles(theme => ({
    }
 }));
 
-export default () => {
+const TodoGrid = ({ todos }) => {
    const classes = useStyles();
-   const mockTodos = {
-      done: [
-         "Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. At per augue perfecto, quo persecuti posidonium in. His id vero labore, epicurei insolens in qui. Ad purto verear expetendis vim, ad posse clita sadipscing vel. Id est nulla eripuit dignissim, elit tibique definitionem nam ex.",
-         "Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. At per augue perfecto, quo persecuti posidonium in. ",
-         "Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. "
-      ],
-      important: [
-         "Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. ",
-         "Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. ",
-         "Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. ",
-         "Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. "
-      ],
-      common: [
-         "Lorem ipsum dolor sit amet, vidit eruditi percipitur vis ad, per sonet everti ne. ",
-         "Lorem ipsum dolor sit amet per sonet everti ne. ",
-         "Lorem ipsum dolor sit amet. "
-      ]
-   };
 
    return (
       <Grid className={classes.root} container alignItems="flex-start">
@@ -65,7 +49,7 @@ export default () => {
                   Done
                </h3>
             </Typography>
-            {mockTodos.done.map(todo => (
+            {todos.done.map(todo => (
                <Grid className={classes.card} item>
                   <TodoCard>{todo}</TodoCard>
                </Grid>
@@ -87,7 +71,7 @@ export default () => {
                   Important
                </h3>
             </Typography>
-            {mockTodos.important.map(todo => (
+            {todos.important.map(todo => (
                <Grid className={classes.card} item>
                   <TodoCard>{todo}</TodoCard>
                </Grid>
@@ -109,7 +93,7 @@ export default () => {
                   To do
                </h3>
             </Typography>
-            {mockTodos.common.map(todo => (
+            {todos.common.map(todo => (
                <Grid className={classes.card} item>
                   <TodoCard>{todo}</TodoCard>
                </Grid>
@@ -118,3 +102,14 @@ export default () => {
       </Grid>
    );
 };
+
+const mapState = state => ({
+   todos: state.todos
+});
+
+const actionCreators = {
+   editTodo,
+   delTodo
+};
+
+export default connect(mapState, actionCreators)(TodoGrid);
