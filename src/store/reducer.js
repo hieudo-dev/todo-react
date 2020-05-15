@@ -68,14 +68,29 @@ const reducer = (state = initialState, action) => {
             return id === action.id ? [id, state.updatedTodo] : [id, data];
          };
 
-         const e = {
+         return {
             ...state,
             done: state.done.map(editPred),
             important: state.important.map(editPred),
             common: state.common.map(editPred)
          };
-         console.log(e);
-         return e;
+      case actions.DONE_TODO:
+         let doneTodo;
+         let doneInd = state.important.findIndex(([id]) => id === action.id);
+         if (doneInd !== -1) {
+            doneTodo = state.important[doneInd];
+         }
+         doneInd = state.common.findIndex(([id]) => id === action.id);
+         if (doneInd !== -1) {
+            doneTodo = state.common[doneInd];
+         }
+
+         return {
+            ...state,
+            done: state.done.concat([doneTodo]),
+            important: state.important.filter(([id]) => id !== action.id),
+            common: state.common.filter(([id]) => id !== action.id)
+         };
       default:
          return state;
    }

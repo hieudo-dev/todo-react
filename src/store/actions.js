@@ -10,8 +10,13 @@ export const delTodo = id => ({
    id: id
 });
 
-export const editTodo = (id, data) => ({
+export const editTodo = id => ({
    type: actions.EDIT_TODO,
+   id: id
+});
+
+export const doneTodo = (id, data) => ({
+   type: actions.DONE_TODO,
    id: id,
    data: data
 });

@@ -18,6 +18,7 @@ import {
 import {
    delTodo,
    editTodo,
+   doneTodo,
    setDeleting,
    setEditing,
    setUpdated
@@ -58,11 +59,12 @@ const useStyles = makeStyles(theme => ({
 const TodoCard = props => {
    const classes = useStyles();
 
-   // const handleDone = () => {
-   //    // TODO: move todo to completed list
-   // };
+   const handleDone = () => {
+      props.doneTodo(props.id);
+      props.setEditing(null);
+   };
 
-   const handleEditClick = () => {
+   const toggleEdit = () => {
       switch (props.editing) {
          case props.id:
             props.setEditing(null);
@@ -99,13 +101,13 @@ const TodoCard = props => {
                      fullWidth
                      classes={{
                         root: classes.contentText
-                        // disabled: classes.disabled
                      }}
                      disabled={props.id !== props.editing}
                      multiline={true}
                      defaultValue={props.data}
                      InputProps={{ disableUnderline: true }}
                      onChange={handleTextChange}
+                     onBlur={toggleEdit}
                   />
                </ExpansionPanelSummary>
                <ExpansionPanelDetails>
@@ -116,7 +118,7 @@ const TodoCard = props => {
                      xs={6}
                   >
                      <CheckIcon
-                        onClick={props.onDone}
+                        onClick={handleDone}
                         className={classes.checkIcon}
                      />
                   </Grid>
@@ -129,11 +131,11 @@ const TodoCard = props => {
                      spacing={1}
                   >
                      <EditIcon
-                        onClick={() => handleEditClick()}
+                        onClick={toggleEdit}
                         style={{ marginRight: 10 }}
                      />
                      <DeleteIcon
-                        onClick={() => handleDelete()}
+                        onClick={handleDelete}
                         style={{ color: red[500] }}
                      />
                   </Grid>
@@ -152,6 +154,7 @@ const mapState = state => ({
 const actionsCreator = {
    delTodo,
    editTodo,
+   doneTodo,
    setDeleting,
    setEditing,
    setUpdated

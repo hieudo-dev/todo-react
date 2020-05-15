@@ -18,12 +18,6 @@ const TodoGrid = props => {
    return (
       <Grid className={classes.root} container alignItems="flex-start">
          <TodoColumn
-            key={0}
-            header="Done"
-            todos={props.done}
-            backColor={green[800]}
-         />
-         <TodoColumn
             key={1}
             header="Important"
             todos={props.important}
@@ -31,9 +25,15 @@ const TodoGrid = props => {
          />
          <TodoColumn
             key={2}
-            header="Common"
+            header="To do"
             todos={props.common}
             backColor={blue[800]}
+         />
+         <TodoColumn
+            key={0}
+            header="Done"
+            todos={props.done}
+            backColor={green[800]}
          />
       </Grid>
    );
