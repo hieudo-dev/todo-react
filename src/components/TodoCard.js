@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CheckIcon from "@material-ui/icons/Check";
-import EditIcon from "@material-ui/icons/Edit";
 import { red } from "@material-ui/core/colors";
 import {
    ExpansionPanel,
@@ -64,17 +63,9 @@ const TodoCard = props => {
       props.setEditing(null);
    };
 
-   const toggleEdit = () => {
-      switch (props.editing) {
-         case props.id:
-            props.setEditing(null);
-            props.editTodo(props.id);
-            break;
-         default:
-            props.setEditing(props.id);
-            props.setUpdated(props.data);
-            break;
-      }
+   const handleEditSave = () => {
+      props.setEditing(null);
+      props.editTodo(props.id);
    };
 
    const handleDelete = () => {
@@ -95,19 +86,23 @@ const TodoCard = props => {
             in={props.id !== props.deleting}
             timeout={{ appear: 0, enter: 0, exit: 300 }}
          >
-            <ExpansionPanel>
+            <ExpansionPanel expanded={props.id === props.editing}>
                <ExpansionPanelSummary>
                   <TextField
                      fullWidth
                      classes={{
                         root: classes.contentText
                      }}
-                     disabled={props.id !== props.editing}
                      multiline={true}
                      defaultValue={props.data}
-                     InputProps={{ disableUnderline: true }}
+                     InputProps={{
+                        disableUnderline: true,
+                        onClick: () => {
+                           props.setEditing(props.id);
+                        }
+                     }}
                      onChange={handleTextChange}
-                     onBlur={toggleEdit}
+                     onBlur={handleEditSave}
                   />
                </ExpansionPanelSummary>
                <ExpansionPanelDetails>
@@ -130,10 +125,6 @@ const TodoCard = props => {
                      xs={6}
                      spacing={1}
                   >
-                     <EditIcon
-                        onClick={toggleEdit}
-                        style={{ marginRight: 10 }}
-                     />
                      <DeleteIcon
                         onClick={handleDelete}
                         style={{ color: red[500] }}
