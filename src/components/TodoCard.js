@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -7,13 +7,14 @@ import EditIcon from "@material-ui/icons/Edit";
 import {
    ExpansionPanel,
    ExpansionPanelSummary,
-   Typography,
    ExpansionPanelDetails,
    createMuiTheme,
    ThemeProvider,
-   Fade
+   Fade,
+   TextField
 } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
+// import { delTodo, editTodo } from "../store/actions";
 
 const theme = createMuiTheme({
    overrides: {
@@ -32,7 +33,10 @@ const useStyles = makeStyles(theme => ({
       padding: theme.spacing(0.5)
    },
    contentText: {
-      color: theme.palette.text.primary
+      color: theme.palette.text.hint,
+      "&$disabled": {
+         color: "white"
+      }
    },
    checkIcon: {
       color: theme.palette.primary.main,
@@ -40,7 +44,8 @@ const useStyles = makeStyles(theme => ({
    },
    editIcons: {
       color: theme.palette.text.primary.main
-   }
+   },
+   disabled: {}
 }));
 
 const TodoCard = props => {
@@ -51,9 +56,18 @@ const TodoCard = props => {
          <Fade in={props.active} timeout={{ appear: 0, enter: 0, exit: 300 }}>
             <ExpansionPanel>
                <ExpansionPanelSummary>
-                  <Typography className={classes.contentText}>
-                     {props.children}
-                  </Typography>
+                  <TextField
+                     fullWidth
+                     classes={{
+                        root: classes.contentText,
+                        disabled: classes.disabled
+                     }}
+                     disabled={!props.editing}
+                     multiline={true}
+                     defaultValue={props.data}
+                     InputProps={{ disableUnderline: true }}
+                     onChange={props.onTextChange}
+                  />
                </ExpansionPanelSummary>
                <ExpansionPanelDetails>
                   <Grid
@@ -62,7 +76,10 @@ const TodoCard = props => {
                      justify="flex-start"
                      xs={6}
                   >
-                     <CheckIcon className={classes.checkIcon} />
+                     <CheckIcon
+                        onClick={props.onDone}
+                        className={classes.checkIcon}
+                     />
                   </Grid>
                   <Grid
                      container
@@ -72,7 +89,10 @@ const TodoCard = props => {
                      xs={6}
                      spacing={1}
                   >
-                     {/* <EditIcon style={{ marginRight: 10 }} /> */}
+                     <EditIcon
+                        onClick={props.onEdit}
+                        style={{ marginRight: 10 }}
+                     />
                      <DeleteIcon
                         onClick={props.onDelete}
                         style={{ color: red[500] }}
