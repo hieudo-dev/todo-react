@@ -40,9 +40,9 @@ const TodoGrid = props => {
 };
 
 const mapState = state => ({
-   done: state.done,
-   important: state.important,
-   common: state.common
+   done: state.todos.done,
+   important: state.todos.important,
+   common: state.todos.common
 });
 
 export default connect(mapState)(TodoGrid);

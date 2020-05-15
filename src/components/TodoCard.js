@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -19,8 +19,7 @@ import {
    editTodo,
    doneTodo,
    setDeleting,
-   setEditing,
-   setUpdated
+   setEditing
 } from "../store/actions";
 
 const theme = createMuiTheme({
@@ -57,6 +56,7 @@ const useStyles = makeStyles(theme => ({
 
 const TodoCard = props => {
    const classes = useStyles();
+   const [text, setText] = useState(props.data);
 
    const handleDone = () => {
       props.doneTodo(props.id);
@@ -65,7 +65,7 @@ const TodoCard = props => {
 
    const handleEditSave = () => {
       props.setEditing(null);
-      props.editTodo(props.id);
+      props.editTodo(props.id, text);
    };
 
    const handleDelete = () => {
@@ -77,7 +77,7 @@ const TodoCard = props => {
    };
 
    const handleTextChange = event => {
-      props.setUpdated(event.target.value);
+      setText(event.target.value);
    };
 
    return (
@@ -94,7 +94,7 @@ const TodoCard = props => {
                         root: classes.contentText
                      }}
                      multiline={true}
-                     defaultValue={props.data}
+                     value={text}
                      InputProps={{
                         disableUnderline: true,
                         onClick: () => {
@@ -138,8 +138,8 @@ const TodoCard = props => {
 };
 
 const mapState = state => ({
-   editing: state.editing,
-   deleting: state.deleting
+   editing: state.app.editing,
+   deleting: state.app.deleting
 });
 
 const actionsCreator = {
@@ -147,8 +147,7 @@ const actionsCreator = {
    editTodo,
    doneTodo,
    setDeleting,
-   setEditing,
-   setUpdated
+   setEditing
 };
 
 export default connect(mapState, actionsCreator)(TodoCard);

@@ -1,11 +1,11 @@
-import * as actions from "./constants";
+import * as actions from "../constants";
 
-// const initialState = {
+// const todoState = {
 //    todos: []
 // };
 
 // Mock data
-const initialState = {
+const todoState = {
    done: [
       [
          1,
@@ -33,29 +33,11 @@ const initialState = {
       [8, "8 Lorem ipsum dolor sit amet. "],
       [9, "9 Lorem ipsum dolor sit amet. "],
       [10, "10 Lorem ipsum dolor sit amet. "]
-   ],
-   deleting: null,
-   editing: null,
-   updatedTodo: ""
+   ]
 };
 
-const reducer = (state = initialState, action) => {
+const todosReducer = (state = todoState, action) => {
    switch (action.type) {
-      case actions.SET_DELETING:
-         return {
-            ...state,
-            deleting: action.val
-         };
-      case actions.SET_EDITING:
-         return {
-            ...state,
-            editing: action.val
-         };
-      case actions.SET_UPDATED:
-         return {
-            ...state,
-            updatedTodo: action.val
-         };
       case actions.DEL_TODO:
          return {
             ...state,
@@ -64,15 +46,17 @@ const reducer = (state = initialState, action) => {
             common: state.common.filter(([id]) => id !== action.id)
          };
       case actions.EDIT_TODO:
-         const editPred = ([id, data]) => {
-            return id === action.id ? [id, state.updatedTodo] : [id, data];
-         };
-
          return {
             ...state,
-            done: state.done.map(editPred),
-            important: state.important.map(editPred),
-            common: state.common.map(editPred)
+            done: state.done.map(([id, data]) =>
+               id === action.id ? [id, action.data] : [id, data]
+            ),
+            important: state.important.map(([id, data]) =>
+               id === action.id ? [id, action.data] : [id, data]
+            ),
+            common: state.common.map(([id, data]) =>
+               id === action.id ? [id, action.data] : [id, data]
+            )
          };
       case actions.DONE_TODO:
          let doneTodo;
@@ -96,4 +80,4 @@ const reducer = (state = initialState, action) => {
    }
 };
 
-export default reducer;
+export default todosReducer;
