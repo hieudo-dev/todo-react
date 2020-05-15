@@ -10,8 +10,23 @@ export const delTodo = id => ({
    id: id
 });
 
-export const editTodo = ({ id, data }) => ({
+export const editTodo = (id, data) => ({
    type: actions.EDIT_TODO,
    id: id,
    data: data
+});
+
+export const setDeleting = val => ({
+   type: actions.SET_DELETING,
+   val: val
+});
+
+export const setEditing = val => ({
+   type: actions.SET_EDITING,
+   val: val
+});
+
+export const setUpdated = val => ({
+   type: actions.SET_UPDATED,
+   val: val
 });

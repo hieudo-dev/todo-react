@@ -27,31 +27,6 @@ const useStyles = makeStyles(theme => ({
 const TodoColumn = props => {
    const classes = useStyles();
 
-   const handleDone = () => {
-      // TODO: move todo to completed list
-   };
-
-   const handleDelete = id => {
-      // setState({ ...state, deleting: id });
-      // setTimeout(() => delTodo(id), 300);
-   };
-
-   const handleEditClick = id => {
-      // switch (state.editing) {
-      //    case id:
-      //       setState({ ...state, editing: -1 });
-      //       editTodo(id, state.updatedTodo);
-      //       break;
-      //    default:
-      //       setState({ ...state, editing: id });
-      //       break;
-      // }
-   };
-
-   const handleTextChange = event => {
-      // setState({ ...state, updatedTodo: event.target.value });
-   };
-
    return (
       <Grid
          className={classes.category}
@@ -71,17 +46,7 @@ const TodoColumn = props => {
          </Typography>
          {props.todos.map(([id, data]) => (
             <Grid className={classes.card} item>
-               <TodoCard
-                  key={id}
-                  id={id}
-                  active={id !== props.deleting}
-                  editing={id === props.editing}
-                  data={data}
-                  onDone={() => handleDone()}
-                  onTextChange={handleTextChange}
-                  onEdit={() => handleEditClick(id)}
-                  onDelete={() => handleDelete(id)}
-               >
+               <TodoCard key={id} id={id} data={data}>
                   {data}
                </TodoCard>
             </Grid>

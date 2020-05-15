@@ -1,9 +1,11 @@
 import React from "react";
+import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CheckIcon from "@material-ui/icons/Check";
 import EditIcon from "@material-ui/icons/Edit";
+import { red } from "@material-ui/core/colors";
 import {
    ExpansionPanel,
    ExpansionPanelSummary,
@@ -13,8 +15,13 @@ import {
    Fade,
    TextField
 } from "@material-ui/core";
-import { red } from "@material-ui/core/colors";
-// import { delTodo, editTodo } from "../store/actions";
+import {
+   delTodo,
+   editTodo,
+   setDeleting,
+   setEditing,
+   setUpdated
+} from "../store/actions";
 
 const theme = createMuiTheme({
    overrides: {
@@ -51,22 +58,54 @@ const useStyles = makeStyles(theme => ({
 const TodoCard = props => {
    const classes = useStyles();
 
+   // const handleDone = () => {
+   //    // TODO: move todo to completed list
+   // };
+
+   const handleEditClick = () => {
+      switch (props.editing) {
+         case props.id:
+            props.setEditing(null);
+            props.editTodo(props.id);
+            break;
+         default:
+            props.setEditing(props.id);
+            props.setUpdated(props.data);
+            break;
+      }
+   };
+
+   const handleDelete = () => {
+      props.setDeleting(props.id);
+      setTimeout(() => {
+         props.delTodo(props.id);
+         props.setDeleting(null);
+      }, 300);
+   };
+
+   const handleTextChange = event => {
+      props.setUpdated(event.target.value);
+   };
+
    return (
       <ThemeProvider theme={theme}>
-         <Fade in={props.active} timeout={{ appear: 0, enter: 0, exit: 300 }}>
+         <Fade
+            in={props.id !== props.deleting}
+            timeout={{ appear: 0, enter: 0, exit: 300 }}
+         >
             <ExpansionPanel>
                <ExpansionPanelSummary>
                   <TextField
                      fullWidth
                      classes={{
-                        root: classes.contentText,
-                        disabled: classes.disabled
+                        root: classes.contentText
+                        // disabled: classes.disabled
                      }}
-                     disabled={!props.editing}
+                     disabled={props.id !== props.editing}
                      multiline={true}
                      defaultValue={props.data}
                      InputProps={{ disableUnderline: true }}
-                     onChange={props.onTextChange}
+                     onChange={handleTextChange}
                   />
                </ExpansionPanelSummary>
                <ExpansionPanelDetails>
@@ -90,11 +129,11 @@ const TodoCard = props => {
                      spacing={1}
                   >
                      <EditIcon
-                        onClick={props.onEdit}
+                        onClick={() => handleEditClick()}
                         style={{ marginRight: 10 }}
                      />
                      <DeleteIcon
-                        onClick={props.onDelete}
+                        onClick={() => handleDelete()}
                         style={{ color: red[500] }}
                      />
                   </Grid>
@@ -105,4 +144,17 @@ const TodoCard = props => {
    );
 };
 
-export default TodoCard;
+const mapState = state => ({
+   editing: state.editing,
+   deleting: state.deleting
+});
+
+const actionsCreator = {
+   delTodo,
+   editTodo,
+   setDeleting,
+   setEditing,
+   setUpdated
+};
+
+export default connect(mapState, actionsCreator)(TodoCard);

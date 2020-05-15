@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
    }
 }));
 
-const TodoGrid = ({ todos, delTodo, editTodo }) => {
+const TodoGrid = props => {
    const classes = useStyles();
 
    return (
@@ -20,19 +20,19 @@ const TodoGrid = ({ todos, delTodo, editTodo }) => {
          <TodoColumn
             key={0}
             header="Done"
-            todos={todos.done}
+            todos={props.done}
             backColor={green[800]}
          />
          <TodoColumn
             key={1}
             header="Important"
-            todos={todos.important}
+            todos={props.important}
             backColor={red[800]}
          />
          <TodoColumn
             key={2}
             header="Common"
-            todos={todos.common}
+            todos={props.common}
             backColor={blue[800]}
          />
       </Grid>
@@ -40,7 +40,9 @@ const TodoGrid = ({ todos, delTodo, editTodo }) => {
 };
 
 const mapState = state => ({
-   todos: state.todos
+   done: state.done,
+   important: state.important,
+   common: state.common
 });
 
 export default connect(mapState)(TodoGrid);
