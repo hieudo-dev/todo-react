@@ -46,7 +46,7 @@ const TodoColumn = props => {
          </Typography>
          {props.todos.map(([id, data]) => (
             <Grid className={classes.card} item>
-               <TodoCard key={id} id={id} data={data}>
+               <TodoCard key={id} id={id} data={data} done={props.done}>
                   {data}
                </TodoCard>
             </Grid>

@@ -14,13 +14,7 @@ import {
    Fade,
    TextField
 } from "@material-ui/core";
-import {
-   delTodo,
-   editTodo,
-   doneTodo,
-   setDeleting,
-   setEditing
-} from "../store/actions";
+import { delTodo, editTodo, doneTodo } from "../store/actions";
 
 const theme = createMuiTheme({
    overrides: {
@@ -56,24 +50,25 @@ const useStyles = makeStyles(theme => ({
 
 const TodoCard = props => {
    const classes = useStyles();
+   const ANIMATION_LENGTH = 300;
    const [text, setText] = useState(props.data);
+   const [active, setActive] = useState(true);
+   const [editing, setEditing] = useState(false);
 
    const handleDone = () => {
-      props.doneTodo(props.id);
-      props.setEditing(null);
+      setEditing(false);
+      setActive(false);
+      setTimeout(() => props.doneTodo(props.id), ANIMATION_LENGTH);
    };
 
    const handleEditSave = () => {
-      props.setEditing(null);
       props.editTodo(props.id, text);
+      setTimeout(() => setEditing(false), ANIMATION_LENGTH);
    };
 
    const handleDelete = () => {
-      props.setDeleting(props.id);
-      setTimeout(() => {
-         props.delTodo(props.id);
-         props.setDeleting(null);
-      }, 300);
+      setActive(false);
+      setTimeout(() => props.delTodo(props.id), ANIMATION_LENGTH);
    };
 
    const handleTextChange = event => {
@@ -82,11 +77,8 @@ const TodoCard = props => {
 
    return (
       <ThemeProvider theme={theme}>
-         <Fade
-            in={props.id !== props.deleting}
-            timeout={{ appear: 0, enter: 0, exit: 300 }}
-         >
-            <ExpansionPanel expanded={props.id === props.editing}>
+         <Fade in={active} timeout={{ appear: 0, enter: 0, exit: 300 }}>
+            <ExpansionPanel expanded={editing}>
                <ExpansionPanelSummary>
                   <TextField
                      fullWidth
@@ -98,7 +90,7 @@ const TodoCard = props => {
                      InputProps={{
                         disableUnderline: true,
                         onClick: () => {
-                           props.setEditing(props.id);
+                           setEditing(true);
                         }
                      }}
                      onChange={handleTextChange}
@@ -112,10 +104,12 @@ const TodoCard = props => {
                      justify="flex-start"
                      xs={6}
                   >
-                     <CheckIcon
-                        onClick={handleDone}
-                        className={classes.checkIcon}
-                     />
+                     {!props.done ? (
+                        <CheckIcon
+                           onClick={handleDone}
+                           className={classes.checkIcon}
+                        />
+                     ) : null}
                   </Grid>
                   <Grid
                      container
@@ -137,17 +131,10 @@ const TodoCard = props => {
    );
 };
 
-const mapState = state => ({
-   editing: state.app.editing,
-   deleting: state.app.deleting
-});
-
 const actionsCreator = {
    delTodo,
    editTodo,
-   doneTodo,
-   setDeleting,
-   setEditing
+   doneTodo
 };
 
-export default connect(mapState, actionsCreator)(TodoCard);
+export default connect(null, actionsCreator)(TodoCard);

@@ -21,13 +21,3 @@ export const doneTodo = (id, data) => ({
    id: id,
    data: data
 });
-
-export const setDeleting = val => ({
-   type: actions.SET_DELETING,
-   val: val
-});
-
-export const setEditing = val => ({
-   type: actions.SET_EDITING,
-   val: val
-});

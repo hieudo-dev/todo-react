@@ -34,6 +34,7 @@ const TodoGrid = props => {
             header="Done"
             todos={props.done}
             backColor={green[800]}
+            done={true}
          />
       </Grid>
    );
