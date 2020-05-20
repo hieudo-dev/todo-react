@@ -1,9 +1,9 @@
 import * as actions from "../constants";
 
 const todoState = {
-   done: [],
-   important: [],
-   active: []
+  done: [],
+  important: [],
+  active: [],
 };
 
 // // Mock data
@@ -39,55 +39,70 @@ const todoState = {
 // };
 
 const todosReducer = (state = todoState, action) => {
-   switch (action.type) {
-      case actions.SET_TODOS:
-         return {
-            ...state,
-            done: action.id === "Done" ? action.list : state.done,
-            important:
-               action.id === "Important" ? action.list : state.important,
-            active: action.id === "Active" ? action.list : state.active
-         };
-      case actions.DEL_TODO:
-         return {
-            ...state,
-            done: state.done.filter(([id]) => id !== action.id),
-            important: state.important.filter(([id]) => id !== action.id),
-            active: state.active.filter(([id]) => id !== action.id)
-         };
-      case actions.EDIT_TODO:
-         return {
-            ...state,
-            done: state.done.map(([id, data]) =>
-               id === action.id ? [id, action.data] : [id, data]
-            ),
-            important: state.important.map(([id, data]) =>
-               id === action.id ? [id, action.data] : [id, data]
-            ),
-            active: state.active.map(([id, data]) =>
-               id === action.id ? [id, action.data] : [id, data]
-            )
-         };
-      case actions.DONE_TODO:
-         let doneTodo;
-         let doneInd = state.important.findIndex(([id]) => id === action.id);
-         if (doneInd !== -1) {
-            doneTodo = state.important[doneInd];
-         }
-         doneInd = state.active.findIndex(([id]) => id === action.id);
-         if (doneInd !== -1) {
-            doneTodo = state.active[doneInd];
-         }
+  switch (action.type) {
+    case actions.SET_TODOS:
+      return {
+        ...state,
+        done: action.id === "Done" ? action.list : state.done,
+        important: action.id === "Important" ? action.list : state.important,
+        active: action.id === "Active" ? action.list : state.active,
+      };
+    case actions.ADD_TODO:
+      const ids = [
+        0,
+        ...state.done.map(([id]) => id),
+        ...state.important.map(([id]) => id),
+        ...state.active.map(([id]) => id),
+      ];
+      const newId = Math.max(...ids) + 1;
 
-         return {
-            ...state,
-            done: state.done.concat([doneTodo]),
-            important: state.important.filter(([id]) => id !== action.id),
-            active: state.active.filter(([id]) => id !== action.id)
-         };
-      default:
-         return state;
-   }
+      return {
+        ...state,
+        important:
+          action.category === "Important"
+            ? state.important.concat([[newId, action.todo]])
+            : state.important,
+        active:
+          action.category === "Active" ? state.active.concat([[newId, action.todo]]) : state.active,
+      };
+    case actions.DEL_TODO:
+      return {
+        ...state,
+        done: state.done.filter(([id]) => id !== action.id),
+        important: state.important.filter(([id]) => id !== action.id),
+        active: state.active.filter(([id]) => id !== action.id),
+      };
+    case actions.EDIT_TODO:
+      return {
+        ...state,
+        done: state.done.map(([id, data]) => (id === action.id ? [id, action.data] : [id, data])),
+        important: state.important.map(([id, data]) =>
+          id === action.id ? [id, action.data] : [id, data]
+        ),
+        active: state.active.map(([id, data]) =>
+          id === action.id ? [id, action.data] : [id, data]
+        ),
+      };
+    case actions.DONE_TODO:
+      let doneTodo;
+      let doneInd = state.important.findIndex(([id]) => id === action.id);
+      if (doneInd !== -1) {
+        doneTodo = state.important[doneInd];
+      }
+      doneInd = state.active.findIndex(([id]) => id === action.id);
+      if (doneInd !== -1) {
+        doneTodo = state.active[doneInd];
+      }
+
+      return {
+        ...state,
+        done: state.done.concat([doneTodo]),
+        important: state.important.filter(([id]) => id !== action.id),
+        active: state.active.filter(([id]) => id !== action.id),
+      };
+    default:
+      return state;
+  }
 };
 
 export default todosReducer;

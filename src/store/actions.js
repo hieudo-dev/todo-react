@@ -6,9 +6,10 @@ export const setTodos = (id, list) => ({
    list: list
 });
 
-export const addTodo = data => ({
+export const addTodo = (category, todo) => ({
    type: actions.ADD_TODO,
-   data: data
+   category: category,
+   todo: todo
 });
 
 export const delTodo = id => ({

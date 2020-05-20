@@ -8,23 +8,23 @@ import NewTodoBar from "./NewTodoBar";
 import TodoGrid from "./TodoGrid";
 
 const theme = createMuiTheme({
-   palette: {
-      primary: blue,
-      secondary: green,
-      background: {
-         default: grey[100]
-      }
-   }
+  palette: {
+    primary: blue,
+    secondary: green,
+    background: {
+      default: grey[100],
+    },
+  },
 });
 
-export default props => {
-   return (
-      <ThemeProvider theme={theme}>
-         <CssBaseline />
-         <NewTodoBar />
-         <br />
-         <br />
-         <TodoGrid />
-      </ThemeProvider>
-   );
+export default (props) => {
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <NewTodoBar />
+      <br />
+      <br />
+      <TodoGrid />
+    </ThemeProvider>
+  );
 };

@@ -1,34 +1,64 @@
 /* eslint-disable no-undef */
-import React from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
+import { Button, InputBase } from "@material-ui/core";
+import { addTodo } from "../store/actions";
 
-const useStyle = makeStyles(theme => ({
-   root: {
-      minWidth: 300
-   },
-   input: {
-      marginTop: 20,
-      backgroundColor: "white"
-   }
+const useStyle = makeStyles((theme) => ({
+  root: {
+    minWidth: 300,
+  },
+  input: {
+    backgroundColor: "white",
+    padding: ".4em .8em",
+    width: "100%",
+    border: `solid 1px ${theme.palette.primary.main}`,
+    borderRight: "none",
+    borderRadius: ".5em 0 0 .5em",
+  },
+  btn: {
+    borderRadius: "0 .5em .5em 0",
+  },
 }));
 
-export default props => {
-   const classes = useStyle();
+const NewTodoBar = (props) => {
+  const classes = useStyle();
+  const [text, setText] = useState("");
 
-   return (
-      <Grid container justify="center" style={{ marginTop: 25 }}>
-         <Grid item xs={6} className={classes.root}>
-            <TextField
-               className={classes.input}
-               placeholder="Take a note..."
-               fullWidth
-               InputProps={{
-                  style: { padding: 5, paddingLeft: 15 }
-               }}
-            />
-         </Grid>
+  const handleClick = () => {
+    // TODO: add important todo
+    props.addTodo("Active", text);
+    setText("");
+  };
+
+  return (
+    <Grid container justify="center" style={{ marginTop: "3em" }}>
+      <Grid container xs={5} wrap="nowrap" className={classes.root}>
+        <InputBase
+          className={classes.input}
+          placeholder="Take a note..."
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+        <Button
+          className={classes.btn}
+          variant="contained"
+          disableElevation
+          size="medium"
+          color="primary"
+          onClick={handleClick}
+        >
+          ADD
+        </Button>
       </Grid>
-   );
+    </Grid>
+  );
 };
+
+const actionCreator = {
+  addTodo,
+};
+
+export default connect(null, actionCreator)(NewTodoBar);
