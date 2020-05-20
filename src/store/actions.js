@@ -1,5 +1,11 @@
 import * as actions from "./constants";
 
+export const setTodos = (id, list) => ({
+   type: actions.SET_TODOS,
+   id: id,
+   list: list
+});
+
 export const addTodo = data => ({
    type: actions.ADD_TODO,
    data: data
