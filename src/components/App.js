@@ -22,8 +22,6 @@ export default (props) => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <NewTodoBar />
-      <br />
-      <br />
       <TodoGrid />
     </ThemeProvider>
   );
