@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import { Button, InputBase, Checkbox } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
+import { Button, InputBase, Checkbox, Snackbar } from "@material-ui/core";
 import StarBorderRounded from "@material-ui/icons/StarBorderRounded";
 import StarRounded from "@material-ui/icons/StarRounded";
 import { addTodo } from "../store/actions";
@@ -39,6 +40,7 @@ const useStyle = makeStyles((theme) => ({
 const NewTodoBar = (props) => {
   const classes = useStyle();
   const [text, setText] = useState("");
+  const [open, setOpen] = useState(false);
   const [important, setImportant] = useState(false);
 
   const handleClick = () => {
@@ -48,7 +50,15 @@ const NewTodoBar = (props) => {
     } else {
       props.addTodo("Active", text);
     }
+    setOpen(true);
     setText("");
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
   };
 
   return (
@@ -78,6 +88,11 @@ const NewTodoBar = (props) => {
           ADD
         </Button>
       </Grid>
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" variant="filled">
+          To do added!
+        </Alert>
+      </Snackbar>
     </Grid>
   );
 };
