@@ -41,16 +41,22 @@ const NewTodoBar = (props) => {
   const classes = useStyle();
   const [text, setText] = useState("");
   const [open, setOpen] = useState(false);
+  const [openErr, setOpenErr] = useState(false);
   const [important, setImportant] = useState(false);
 
   const handleClick = () => {
-    // TODO: add important todo
+    if (!text) {
+      setOpenErr(true);
+      return;
+    }
     if (important) {
       props.addTodo("Important", text);
     } else {
       props.addTodo("Active", text);
     }
     setOpen(true);
+    setOpenErr(false);
+    setImportant(false);
     setText("");
   };
 
@@ -59,6 +65,13 @@ const NewTodoBar = (props) => {
       return;
     }
     setOpen(false);
+  };
+
+  const handleCloseErr = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenErr(false);
   };
 
   return (
@@ -88,9 +101,14 @@ const NewTodoBar = (props) => {
           ADD
         </Button>
       </Grid>
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" variant="filled">
-          To do added!
+          To do added
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openErr} autoHideDuration={2000} onClose={handleCloseErr}>
+        <Alert onClose={handleCloseErr} severity="error" variant="filled">
+          Please type something!
         </Alert>
       </Snackbar>
     </Grid>
