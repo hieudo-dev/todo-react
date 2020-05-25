@@ -1,4 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A responsive to-do app created using ReactJS, Redux & Material-UI. Supports editing and important todos
 
 ## Available Scripts
 
